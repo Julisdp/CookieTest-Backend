@@ -43,7 +43,6 @@
     "gopd": "^1.0.1",
     "has-flag": "^3.0.0",
     "has-property-descriptors": "^1.0.2",
-    "has-proto": "^1.0.3",
     "has-symbols": "^1.0.3",
     "hasown": "^2.0.2",
     "http-errors": "^2.0.0",
