@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "gender": "male",
-    "age": 25
+    "age": 10
 }
 
 ###
@@ -22,7 +22,7 @@ Content-Type: application/json
     "rtaGrasoso": 3,
     "rtaCrocante": 4,
     "rtaDureza": 1,
-    "user": "6660ea5d2cf266455876e256"
+    "user": "6660f15a8b13afb4f888bfbc"
 }
 
 ###
