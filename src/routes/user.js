@@ -21,4 +21,14 @@ router.post('/users', (req, res) => {
         .catch((error) => res.status(400).json({ message: error.message }));
 });
 
+router.post('/users', (req, res) => {
+    console.log('POST /users', req.body);
+    const user = new userSchema(req.body);
+    user
+        .save()
+        .then((data) => res.json(data))
+        .catch((error) => res.status(500).json({ message: error.message }));
+});
+
+
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 require('dotenv').config();
+const path = require('path');
 const userRoutes = require('./routes/user');
 const pollRoutes = require('./routes/poll');
 
@@ -11,6 +12,7 @@ const port = process.env.PORT || 2000;
 // Middleware
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware para manejar errores de JSON
 app.use((err, req, res, next) => {
@@ -24,7 +26,7 @@ app.use('/api', userRoutes);
 app.use('/api', pollRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 mongoose

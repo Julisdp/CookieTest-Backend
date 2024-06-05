@@ -18,28 +18,28 @@ const pollSchema = Joi.object({
 });
 
 // Crear una nueva encuesta
-router.post('/polls', async (req, res) => {
-    const { error, value } = pollSchema.validate(req.body);
-    if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-    }
-
+router.post('/agregarEncuesta', async (req, res, next) => {
     try {
+        const { error, value } = pollSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+
         const user = await User.findById(value.user);
         if (!user) {
-            return res.status(400).json({ message: 'User not found' });
+            return res.status(400).json({ message: 'Usuario no encontrado.' });
         }
 
         const poll = new Poll(value);
         await poll.save();
         res.json(poll);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        next(err);
     }
 });
 
 // Obtener todas las encuestas
-router.get('/polls', async (req, res) => {
+router.get('/obtenerEncuestas', async (req, res) => {
     try {
         const polls = await Poll.find().populate('user', 'gender age');
         res.json(polls);
