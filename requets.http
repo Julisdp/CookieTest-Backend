@@ -1,9 +1,25 @@
-###
-
-POST http://localhost:2000/api/users HTTP/1.1
+### POST Request for User
+POST http://localhost:2000/api/users
 Content-Type: application/json
 
 {
     "gender": "male",
     "age": 25
+}
+
+###
+
+### POST Request for Poll
+POST http://localhost:2000/api/polls
+Content-Type: application/json
+
+{
+    "rtaAfectivo": 5,
+    "rtaSuabidad": 4,
+    "rtaHumedad": 3,
+    "rtaEsponjosidad": 4,
+    "rtaFragilidad": 2,
+    "rtaGrasoso": 3,
+    "rtaCrocante": 4,
+    "rtaDureza": 1
 }
