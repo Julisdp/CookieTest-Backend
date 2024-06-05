@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 require('dotenv').config();
 const userRoutes = require('./routes/user');
 const pollRoutes = require('./routes/poll');
@@ -9,6 +10,7 @@ const port = process.env.PORT || 2000;
 
 // Middleware
 app.use(express.json());
+app.use(morgan('dev'));
 
 // Middleware para manejar errores de JSON
 app.use((err, req, res, next) => {

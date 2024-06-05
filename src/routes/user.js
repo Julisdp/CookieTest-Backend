@@ -1,14 +1,24 @@
-const express = require ("express");
-const userSchema = require("../models/user");
+const express = require('express');
+const User = require('../models/user');
+const Joi = require('joi');
 
 const router = express.Router();
 
+const userSchema = Joi.object({
+    gender: Joi.string().valid('male', 'female', 'other').required(),
+    age: Joi.number().integer().min(1).required()
+});
+
 router.post('/users', (req, res) => {
-    const user = userSchema(req.body);
-    user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error}))
+    const { error, value } = userSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const user = new User(value);
+    user.save()
+        .then((data) => res.json(data))
+        .catch((error) => res.status(400).json({ message: error.message }));
 });
 
 module.exports = router;

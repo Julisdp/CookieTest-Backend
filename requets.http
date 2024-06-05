@@ -21,5 +21,11 @@ Content-Type: application/json
     "rtaFragilidad": 2,
     "rtaGrasoso": 3,
     "rtaCrocante": 4,
-    "rtaDureza": 1
+    "rtaDureza": 1,
+    "user": "6660caafe2f53251656f5c07"
 }
+
+###
+
+### GET Request for Polls
+GET http://localhost:2000/api/polls
