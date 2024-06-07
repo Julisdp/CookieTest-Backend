@@ -1,5 +1,5 @@
 const express = require('express');
-const PollAndUser = require('../models/pollAndUser');
+const PollAndUser = require('../models/pollAndUser.js');
 const Joi = require('joi');
 
 const router = express.Router();
