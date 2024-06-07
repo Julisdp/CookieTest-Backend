@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 require('dotenv').config();
 const path = require('path');
-const userRoutes = require('./routes/user');
-const pollRoutes = require('./routes/poll');
+const pollAndUserRoutes = require('./routes/pollAndUser');
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -22,8 +21,8 @@ app.use((err, req, res, next) => {
     next();
 });
 
-app.use('/api', userRoutes);
-app.use('/api', pollRoutes);
+// Usar las rutas de pollAndUser
+app.use('/api/encuestas', pollAndUserRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

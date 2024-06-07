@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const pollSchema = mongoose.Schema({
+const pollAndUserSchema = mongoose.Schema({
     rtaAfectivo: {
         type: Number,
         required: true,
         min: 1,
         max: 5
     },
-    rtaSuabidad: {
+    rtaSuavidad: {
         type: Number,
         required: true,
         min: 1,
@@ -49,11 +49,18 @@ const pollSchema = mongoose.Schema({
         min: 1,
         max: 5
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    genero: {
+        type: String,
+        required: true,
+        enum: ['Hombre', 'Mujer', 'Otro']
+    },
+    edad: {
+        type: Number,
+        required: true,
+        min: 1
     }
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model('Poll', pollSchema);
+module.exports = mongoose.model('PollAndUser', pollAndUserSchema);
