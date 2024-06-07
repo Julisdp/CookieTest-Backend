@@ -1,31 +1,15 @@
-### POST Request for User
-POST http://localhost:2000/api/users
+POST http://localhost:2000/api/encuestas/agregarEncuesta
 Content-Type: application/json
 
 {
-    "gender": "male",
-    "age": 10
-}
-
-###
-
-### POST Request for Poll
-POST http://localhost:2000/api/polls
-Content-Type: application/json
-
-{
+    "genero": "Hombre",
+    "edad": 10,
     "rtaAfectivo": 5,
-    "rtaSuabidad": 4,
+    "rtaSuavidad": 4,
     "rtaHumedad": 3,
     "rtaEsponjosidad": 4,
     "rtaFragilidad": 2,
     "rtaGrasoso": 3,
     "rtaCrocante": 4,
-    "rtaDureza": 1,
-    "user": "6660f15a8b13afb4f888bfbc"
+    "rtaDureza": 1
 }
-
-###
-
-### GET Request for Polls
-GET http://localhost:2000/api/obtenerEncuestas
