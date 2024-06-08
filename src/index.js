@@ -1,14 +1,21 @@
+// index.js
 const express = require('express');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
+const connectDB = require('./config/db');
 const pollAndUserRoutes = require('./routes/pollAndUser');
 const radarChartDataRoutes = require('./routes/radarChartData');
 
 const app = express();
 const port = process.env.PORT || 2000;
+
+// Conectar a la base de datos
+connectDB().catch(err => {
+    console.error('Error al conectar a la base de datos:', err);
+    process.exit(1);
+});
 
 // Middleware
 app.use(express.json());
@@ -17,10 +24,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configurar CORS
 app.use(cors({
-    origin: 'https://https://87vf9j13-2000.brs.devtunnels.ms/', // Especifica tu URL pública
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
-    credentials: true // Permitir el envío de cookies con la solicitud
+    origin: 'https://87vf9j13-2000.brs.devtunnels.ms/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 
 // Middleware para manejar errores de JSON
@@ -40,11 +47,6 @@ app.use('/api/radarChartData', radarChartDataRoutes);
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log('Conectado a MongoDB Atlas'))
-    .catch((error) => console.error(error));
 
 app.listen(port, () => console.log('listening on port ' + port));
 
