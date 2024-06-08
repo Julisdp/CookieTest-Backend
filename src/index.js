@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
 const pollAndUserRoutes = require('./routes/pollAndUser');
@@ -13,6 +14,11 @@ const port = process.env.PORT || 2000;
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configurar CORS
+app.use(cors({
+    origin: '*' // Permitir todas las solicitudes desde cualquier origen
+}));
 
 // Middleware para manejar errores de JSON
 app.use((err, req, res, next) => {

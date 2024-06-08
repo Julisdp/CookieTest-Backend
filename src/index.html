@@ -35,7 +35,8 @@
         .range-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: -10px;
+            font-size: 0.75em;
+            margin-top: 5px;
         }
         .yellow-box {
             border: 2px solid #ffc107;
@@ -43,6 +44,41 @@
             padding: 20px;
             margin-bottom: 20px;
             background-color: #fff3cd;
+        }
+        .form-range {
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #ffcccc;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .form-range:hover {
+            opacity: 1;
+        }
+        .form-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff66b2;
+            cursor: pointer;
+            border: 2px solid #ff66b2;
+        }
+        .form-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff66b2;
+            cursor: pointer;
+            border: 2px solid #ff66b2;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #ff66b2;
         }
     </style>
     <script>
@@ -55,38 +91,34 @@
         }
 
         function enviarFormulario() {
-    const edad = document.getElementById('edad').value;
-    const sexo = document.getElementById('sexo').value;
+            const edad = document.getElementById('edad').value;
+            const sexo = document.getElementById('sexo').value;
 
-    // Recoge las selecciones de las caritas y convierte a un valor numérico
-    const apariencia = mapEmojiToValue(document.querySelector('#apariencia .emoji.selected'));
-    const aroma = mapEmojiToValue(document.querySelector('#aroma .emoji.selected'));
-    const sabor = mapEmojiToValue(document.querySelector('#sabor .emoji.selected'));
-    const textura = mapEmojiToValue(document.querySelector('#textura .emoji.selected'));
-    const opinion = mapEmojiToValue(document.querySelector('#opinion .emoji.selected'));
+            const apariencia = mapEmojiToValue(document.querySelector('#apariencia .emoji.selected'));
+            const aroma = mapEmojiToValue(document.querySelector('#aroma .emoji.selected'));
+            const sabor = mapEmojiToValue(document.querySelector('#sabor .emoji.selected'));
+            const textura = mapEmojiToValue(document.querySelector('#textura .emoji.selected'));
+            const opinion = mapEmojiToValue(document.querySelector('#opinion .emoji.selected'));
 
-    // Valores de los sliders
-    const dulzor = document.getElementById('dulzor').value;
-    const acidez = document.getElementById('acidez').value;
-    const amargor = document.getElementById('amargor').value;
-    const salado = document.getElementById('salado').value;
+            const dulzor = document.getElementById('dulzor').value;
+            const acidez = document.getElementById('acidez').value;
+            const amargor = document.getElementById('amargor').value;
+            const salado = document.getElementById('salado').value;
 
-    // Crear objeto con los datos
-    const datos = {
-        edad: parseInt(edad, 10),
-        genero: sexo,
-        rtaAfectivo: parseInt(opinion, 10),
-        rtaSuavidad: parseInt(textura, 10),
-        rtaHumedad: parseInt(acidez, 10), // Ejemplo de correspondencia
-        rtaEsponjosidad: parseInt(dulzor, 10), // Ejemplo de correspondencia
-        rtaFragilidad: parseInt(amargor, 10), // Ejemplo de correspondencia
-        rtaGrasoso: parseInt(salado, 10), // Ejemplo de correspondencia
-        rtaCrocante: parseInt(apariencia, 10), // Ejemplo de correspondencia
-        rtaDureza: parseInt(aroma, 10) // Ejemplo de correspondencia
-    };
+            const datos = {
+                edad: parseInt(edad, 10),
+                genero: sexo,
+                rtaAfectivo: parseInt(opinion, 10),
+                rtaSuavidad: parseInt(textura, 10),
+                rtaHumedad: parseInt(acidez, 10),
+                rtaEsponjosidad: parseInt(dulzor, 10),
+                rtaFragilidad: parseInt(amargor, 10),
+                rtaGrasoso: parseInt(salado, 10),
+                rtaCrocante: parseInt(apariencia, 10),
+                rtaDureza: parseInt(aroma, 10)
+            };
 
-    // Enviar datos al backend
-    fetch('http://localhost:2000/api/encuestas/agregarEncuesta', {
+            fetch('http://localhost:2000/api/encuestas/agregarEncuesta', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,18 +128,14 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Éxito:', data);
-                // Redirigir a la página de agradecimiento
                 window.location.href = 'gracias.html';
             })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+            });
+        }
 
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
-    });
-}
-
-
-        // Mapeo de emojis a valores numéricos
         function mapEmojiToValue(emoji) {
             if (!emoji) return null;
             const emojiMap = {
@@ -128,11 +156,9 @@
 </head>
 <body>
 <div class="container mt-5">
-    <!-- Formulario completo -->
     <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Evaluación Sensorial</h5>
         <form>
-            <!-- Información personal -->
             <div class="mb-3">
                 <label for="edad" class="form-label">Edad:</label>
                 <input type="number" class="form-control" id="edad" required>
@@ -149,7 +175,6 @@
         </form>
     </div>
 
-    <!-- Prueba Afectiva -->
     <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Prueba Afectiva</h5>
         <form>
@@ -194,7 +219,7 @@
                 </div>
             </div>
             <div id="opinion" class="mb-3">
-                <label class="form-label">Opinión General:</label>
+                <label class="form-label">Prueba Afectiva - Opinión:</label>
                 <div class="d-flex justify-content-center">
                     <span id="emoji21" class="emoji" onclick="selectEmoji('opinion', 'emoji21')">😡</span>
                     <span id="emoji22" class="emoji" onclick="selectEmoji('opinion', 'emoji22')">😟</span>
@@ -213,7 +238,7 @@
             <div class="mb-3">
                 <label for="dulzor" class="form-label">Dulzor:</label>
                 <input type="range" class="form-range" min="1" max="5" step="1" id="dulzor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels">
+                <div class="range-labels" style="margin-top: -15px;">
                     <span>Muy Malo</span>
                     <span>Malo</span>
                     <span>Normal</span>
@@ -224,7 +249,7 @@
             <div class="mb-3">
                 <label for="acidez" class="form-label">Acidez:</label>
                 <input type="range" class="form-range" min="1" max="5" step="1" id="acidez" oninput="ajustarValorSlider(this)">
-                <div class="range-labels">
+                <div class="range-labels" style="margin-top: -15px;">
                     <span>Muy Malo</span>
                     <span>Malo</span>
                     <span>Normal</span>
@@ -235,7 +260,7 @@
             <div class="mb-3">
                 <label for="amargor" class="form-label">Amargor:</label>
                 <input type="range" class="form-range" min="1" max="5" step="1" id="amargor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels">
+                <div class="range-labels" style="margin-top: -15px;">
                     <span>Muy Malo</span>
                     <span>Malo</span>
                     <span>Normal</span>
@@ -246,7 +271,7 @@
             <div class="mb-3">
                 <label for="salado" class="form-label">Salado:</label>
                 <input type="range" class="form-range" min="1" max="5" step="1" id="salado" oninput="ajustarValorSlider(this)">
-                <div class="range-labels">
+                <div class="range-labels" style="margin-top: -15px;">
                     <span>Muy Malo</span>
                     <span>Malo</span>
                     <span>Normal</span>
@@ -254,16 +279,11 @@
                     <span>Muy Bueno</span>
                 </div>
             </div>
+            <div class="d-grid">
+                <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Enviar</button>
+            </div>
         </form>
     </div>
-
-    <!-- Botón de envío -->
-    <div class="text-center mt-3">
-        <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Enviar</button>
-    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
