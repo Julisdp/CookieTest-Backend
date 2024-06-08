@@ -22,13 +22,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configurar CORS
-app.use(cors({
-    origin: 'https://87vf9j13-2000.brs.devtunnels.ms/',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
 
 // Middleware para manejar errores de JSON
 app.use((err, req, res, next) => {
