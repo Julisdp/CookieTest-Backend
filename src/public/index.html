@@ -87,20 +87,18 @@
 
     // Enviar datos al backend
     fetch('http://localhost:2000/api/encuestas/agregarEncuesta', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
-    })
-    .then(response => response.json())
-    .then(data => {
-    console.log('Éxito:', data);
-    // Almacenar los datos en localStorage
-    localStorage.setItem('evaluacionSensorial', JSON.stringify(datos));
-    // Redirigir a la página del gráfico
-    window.location.href = "/grafico.html";
-})
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Éxito:', data);
+                // Redirigir a la página de agradecimiento
+                window.location.href = 'gracias.html';
+            })
 
     .catch(error => {
         console.error('Error:', error);

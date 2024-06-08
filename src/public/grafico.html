@@ -12,55 +12,127 @@
         .container {
             margin-top: 50px;
         }
+        .yellow-box {
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff3cd;
+        }
+        .chart-container {
+            display: none;
+        }
+        .btn-primary {
+            background-color: #ffc107;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #e0a800;
+        }
+        .legend-container {
+            margin-top: 20px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <h3 class="text-center">Gráfico Sensorial</h3>
-        <canvas id="radarChart"></canvas>
+        <div class="yellow-box card card-body">
+            <h3 class="text-center">Gráfico Sensorial</h3>
+            <div class="text-center mb-4">
+                <button class="btn btn-primary" onclick="showChart('afectivo')">Ver Gráfico Afectivo</button>
+                <button class="btn btn-primary" onclick="showChart('descriptivo')">Ver Gráfico Descriptivo</button>
+            </div>
+            <div id="chartContainer" class="chart-container row">
+                <div class="col-md-8">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div id="legendContainer" class="col-md-4 legend-container">
+                    <!-- Leyenda se inserta aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
     </div>
     <script>
-        // Recuperar los datos almacenados en localStorage
-        const storedData = localStorage.getItem('evaluacionSensorial');
-        const evaluacionSensorial = storedData ? JSON.parse(storedData) : null;
-    
-        // Datos para el gráfico
-        const data = {
-            labels: ['Apariencia', 'Aroma', 'Sabor', 'Textura', 'Opinión'],
-            datasets: [{
-                label: 'Evaluación Sensorial',
-                data: evaluacionSensorial ? [
+        let chart;
+
+        function showChart(type) {
+            document.getElementById('chartContainer').style.display = 'block';
+            if (chart) {
+                chart.destroy();
+            }
+
+            const storedData = localStorage.getItem('evaluacionSensorial');
+            const evaluacionSensorial = storedData ? JSON.parse(storedData) : null;
+
+            let labels, dataValues, legendHtml;
+
+            if (type === 'afectivo') {
+                labels = ['Apariencia', 'Aroma', 'Sabor', 'Textura', 'Opinión'];
+                dataValues = evaluacionSensorial ? [
                     evaluacionSensorial.rtaCrocante,
                     evaluacionSensorial.rtaDureza,
                     evaluacionSensorial.rtaAfectivo,
                     evaluacionSensorial.rtaSuavidad,
                     evaluacionSensorial.rtaHumedad
-                ] : [0, 0, 0, 0, 0], // Datos de ejemplo
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        };
-    
-        const config = {
-            type: 'radar',
-            data: data,
-            options: {
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        max: 5
+                ] : [0, 0, 0, 0, 0];
+                legendHtml = `
+                    <h5>Leyenda</h5>
+                    <ul>
+                        <li>1 - Muy Malo (😡)</li>
+                        <li>2 - Malo (😟)</li>
+                        <li>3 - Normal (😐)</li>
+                        <li>4 - Bueno (😊)</li>
+                        <li>5 - Muy Bueno (😍)</li>
+                    </ul>
+                `;
+            } else if (type === 'descriptivo') {
+                labels = ['Dulzor', 'Acidez', 'Amargor', 'Salado'];
+                dataValues = evaluacionSensorial ? [
+                    evaluacionSensorial.rtaEsponjosidad,
+                    evaluacionSensorial.rtaHumedad,
+                    evaluacionSensorial.rtaFragilidad,
+                    evaluacionSensorial.rtaGrasoso
+                ] : [0, 0, 0, 0];
+                legendHtml = `
+                    <h5>Leyenda</h5>
+                    <ul>
+                        <li>1 - Muy Malo</li>
+                        <li>2 - Malo</li>
+                        <li>3 - Normal</li>
+                        <li>4 - Bueno</li>
+                        <li>5 - Muy Bueno</li>
+                    </ul>
+                `;
+            }
+
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: `Gráfico ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+                    data: dataValues,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 5
+                        }
                     }
                 }
-            }
-        };
-    
-        const radarChart = new Chart(
-            document.getElementById('radarChart'),
-            config
-        );
+            };
+
+            chart = new Chart(document.getElementById('radarChart'), config);
+            document.getElementById('legendContainer').innerHTML = legendHtml;
+        }
     </script>
-    
 </body>
 </html>

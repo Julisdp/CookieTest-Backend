@@ -25,7 +25,6 @@ app.use((err, req, res, next) => {
 // Usar las rutas de pollAndUser
 app.use('/api/encuestas', pollAndUserRoutes);
 
-
 // Usar las rutas de radarChartData
 app.use('/api/radarChartData', radarChartDataRoutes);
 
@@ -41,5 +40,3 @@ mongoose
 app.listen(port, () => console.log('listening on port ' + port));
 
 module.exports = app;
-
-
