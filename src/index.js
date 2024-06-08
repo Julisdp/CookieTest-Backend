@@ -4,6 +4,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const path = require('path');
 const pollAndUserRoutes = require('./routes/pollAndUser');
+const radarChartDataRoutes = require('./routes/radarChartData');
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -23,6 +24,10 @@ app.use((err, req, res, next) => {
 
 // Usar las rutas de pollAndUser
 app.use('/api/encuestas', pollAndUserRoutes);
+
+
+// Usar las rutas de radarChartData
+app.use('/api/radarChartData', radarChartDataRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

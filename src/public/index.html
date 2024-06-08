@@ -16,11 +16,11 @@
             margin: 20px auto;
         }
         .btn-primary {
-            background-color: #28a745;
+            background-color: #ffc107;
             border: none;
         }
         .btn-primary:hover {
-            background-color: #218838;
+            background-color: #e0a800;
         }
         .emoji {
             font-size: 2em;
@@ -28,7 +28,7 @@
             margin: 0 10px;
         }
         .selected {
-            border: 2px solid #28a745;
+            border: 2px solid #ffc107;
             border-radius: 50%;
             padding: 5px;
         }
@@ -37,12 +37,12 @@
             justify-content: space-between;
             margin-top: -10px;
         }
-        .pink-box {
-            border: 2px solid #ff69b4;
+        .yellow-box {
+            border: 2px solid #ffc107;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            background-color: #ffe6f2;
+            background-color: #fff3cd;
         }
     </style>
     <script>
@@ -55,53 +55,59 @@
         }
 
         function enviarFormulario() {
-            const edad = document.getElementById('edad').value;
-            const sexo = document.getElementById('sexo').value;
+    const edad = document.getElementById('edad').value;
+    const sexo = document.getElementById('sexo').value;
 
-            // Recoge las selecciones de las caritas y convierte a un valor numérico
-            const apariencia = mapEmojiToValue(document.querySelector('#apariencia .emoji.selected'));
-            const aroma = mapEmojiToValue(document.querySelector('#aroma .emoji.selected'));
-            const sabor = mapEmojiToValue(document.querySelector('#sabor .emoji.selected'));
-            const textura = mapEmojiToValue(document.querySelector('#textura .emoji.selected'));
-            const opinion = mapEmojiToValue(document.querySelector('#opinion .emoji.selected'));
+    // Recoge las selecciones de las caritas y convierte a un valor numérico
+    const apariencia = mapEmojiToValue(document.querySelector('#apariencia .emoji.selected'));
+    const aroma = mapEmojiToValue(document.querySelector('#aroma .emoji.selected'));
+    const sabor = mapEmojiToValue(document.querySelector('#sabor .emoji.selected'));
+    const textura = mapEmojiToValue(document.querySelector('#textura .emoji.selected'));
+    const opinion = mapEmojiToValue(document.querySelector('#opinion .emoji.selected'));
 
-            // Valores de los sliders
-            const dulzor = document.getElementById('dulzor').value;
-            const acidez = document.getElementById('acidez').value;
-            const amargor = document.getElementById('amargor').value;
-            const salado = document.getElementById('salado').value;
+    // Valores de los sliders
+    const dulzor = document.getElementById('dulzor').value;
+    const acidez = document.getElementById('acidez').value;
+    const amargor = document.getElementById('amargor').value;
+    const salado = document.getElementById('salado').value;
 
-            // Crear objeto con los datos
-            const datos = {
-                edad: parseInt(edad, 10),
-                genero: sexo,
-                rtaAfectivo: parseInt(opinion, 10),
-                rtaSuavidad: parseInt(textura, 10),
-                rtaHumedad: parseInt(acidez, 10), // Ejemplo de correspondencia
-                rtaEsponjosidad: parseInt(dulzor, 10), // Ejemplo de correspondencia
-                rtaFragilidad: parseInt(amargor, 10), // Ejemplo de correspondencia
-                rtaGrasoso: parseInt(salado, 10), // Ejemplo de correspondencia
-                rtaCrocante: parseInt(apariencia, 10), // Ejemplo de correspondencia
-                rtaDureza: parseInt(aroma, 10) // Ejemplo de correspondencia
-            };
+    // Crear objeto con los datos
+    const datos = {
+        edad: parseInt(edad, 10),
+        genero: sexo,
+        rtaAfectivo: parseInt(opinion, 10),
+        rtaSuavidad: parseInt(textura, 10),
+        rtaHumedad: parseInt(acidez, 10), // Ejemplo de correspondencia
+        rtaEsponjosidad: parseInt(dulzor, 10), // Ejemplo de correspondencia
+        rtaFragilidad: parseInt(amargor, 10), // Ejemplo de correspondencia
+        rtaGrasoso: parseInt(salado, 10), // Ejemplo de correspondencia
+        rtaCrocante: parseInt(apariencia, 10), // Ejemplo de correspondencia
+        rtaDureza: parseInt(aroma, 10) // Ejemplo de correspondencia
+    };
 
-            // Enviar datos al backend
-            fetch('http://localhost:2000/api/encuestas/agregarEncuesta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datos)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Éxito:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
-            });
-        }
+    // Enviar datos al backend
+    fetch('http://localhost:2000/api/encuestas/agregarEncuesta', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+    console.log('Éxito:', data);
+    // Almacenar los datos en localStorage
+    localStorage.setItem('evaluacionSensorial', JSON.stringify(datos));
+    // Redirigir a la página del gráfico
+    window.location.href = "/grafico.html";
+})
+
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+    });
+}
+
 
         // Mapeo de emojis a valores numéricos
         function mapEmojiToValue(emoji) {
@@ -125,7 +131,7 @@
 <body>
 <div class="container mt-5">
     <!-- Formulario completo -->
-    <div class="pink-box card card-body">
+    <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Evaluación Sensorial</h5>
         <form>
             <!-- Información personal -->
@@ -146,7 +152,7 @@
     </div>
 
     <!-- Prueba Afectiva -->
-    <div class="pink-box card card-body">
+    <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Prueba Afectiva</h5>
         <form>
             <div id="apariencia" class="mb-3">
@@ -203,7 +209,7 @@
     </div>
 
     <!-- Prueba Descriptiva -->
-    <div class="pink-box card card-body">
+    <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Prueba Descriptiva</h5>
         <form>
             <div class="mb-3">

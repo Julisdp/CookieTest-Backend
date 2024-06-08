@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico Sensorial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3 class="text-center">Gráfico Sensorial</h3>
+        <canvas id="radarChart"></canvas>
+    </div>
+    <script>
+        // Recuperar los datos almacenados en localStorage
+        const storedData = localStorage.getItem('evaluacionSensorial');
+        const evaluacionSensorial = storedData ? JSON.parse(storedData) : null;
+    
+        // Datos para el gráfico
+        const data = {
+            labels: ['Apariencia', 'Aroma', 'Sabor', 'Textura', 'Opinión'],
+            datasets: [{
+                label: 'Evaluación Sensorial',
+                data: evaluacionSensorial ? [
+                    evaluacionSensorial.rtaCrocante,
+                    evaluacionSensorial.rtaDureza,
+                    evaluacionSensorial.rtaAfectivo,
+                    evaluacionSensorial.rtaSuavidad,
+                    evaluacionSensorial.rtaHumedad
+                ] : [0, 0, 0, 0, 0], // Datos de ejemplo
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+    
+        const config = {
+            type: 'radar',
+            data: data,
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        };
+    
+        const radarChart = new Chart(
+            document.getElementById('radarChart'),
+            config
+        );
+    </script>
+    
+</body>
+</html>
