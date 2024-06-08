@@ -17,7 +17,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configurar CORS
 app.use(cors({
-    origin: '*' // Permitir todas las solicitudes desde cualquier origen
+    origin: 'https://https://87vf9j13-2000.brs.devtunnels.ms/', // Especifica tu URL pública
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+    credentials: true // Permitir el envío de cookies con la solicitud
 }));
 
 // Middleware para manejar errores de JSON
