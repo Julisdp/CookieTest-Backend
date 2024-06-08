@@ -105,6 +105,11 @@
             const amargor = document.getElementById('amargor').value;
             const salado = document.getElementById('salado').value;
 
+            if (!edad || !sexo || !apariencia || !aroma || !sabor || !textura || !opinion) {
+                alert('Por favor, completa todos los campos del formulario.');
+                return;
+            }
+
             const datos = {
                 edad: parseInt(edad, 10),
                 genero: sexo,
