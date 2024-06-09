@@ -94,33 +94,27 @@
             const edad = document.getElementById('edad').value;
             const sexo = document.getElementById('sexo').value;
 
-            const apariencia = mapEmojiToValue(document.querySelector('#apariencia .emoji.selected'));
-            const aroma = mapEmojiToValue(document.querySelector('#aroma .emoji.selected'));
-            const sabor = mapEmojiToValue(document.querySelector('#sabor .emoji.selected'));
-            const textura = mapEmojiToValue(document.querySelector('#textura .emoji.selected'));
             const opinion = mapEmojiToValue(document.querySelector('#opinion .emoji.selected'));
 
-            const dulzor = document.getElementById('dulzor').value;
-            const acidez = document.getElementById('acidez').value;
-            const amargor = document.getElementById('amargor').value;
-            const salado = document.getElementById('salado').value;
-
-            if (!edad || !sexo || !apariencia || !aroma || !sabor || !textura || !opinion) {
-                alert('Por favor, completa todos los campos del formulario.');
-                return;
-            }
+            const suavidad = document.getElementById('suavidad').value;
+            const humedad = document.getElementById('humedad').value;
+            const esponjosidad = document.getElementById('esponjosidad').value;
+            const fragilidad = document.getElementById('fragilidad').value;
+            const grasoso = document.getElementById('grasoso').value;
+            const crocante = document.getElementById('crocante').value;
+            const dureza = document.getElementById('dureza').value;
 
             const datos = {
                 edad: parseInt(edad, 10),
                 genero: sexo,
                 rtaAfectivo: parseInt(opinion, 10),
-                rtaSuavidad: parseInt(textura, 10),
-                rtaHumedad: parseInt(acidez, 10),
-                rtaEsponjosidad: parseInt(dulzor, 10),
-                rtaFragilidad: parseInt(amargor, 10),
-                rtaGrasoso: parseInt(salado, 10),
-                rtaCrocante: parseInt(apariencia, 10),
-                rtaDureza: parseInt(aroma, 10)
+                rtaSuavidad: parseInt(suavidad, 10),
+                rtaHumedad: parseInt(humedad, 10),
+                rtaEsponjosidad: parseInt(esponjosidad, 10),
+                rtaFragilidad: parseInt(fragilidad, 10),
+                rtaGrasoso: parseInt(grasoso, 10),
+                rtaCrocante: parseInt(crocante, 10),
+                rtaDureza: parseInt(dureza, 10)
             };
 
             fetch('/api/encuestas/agregarEncuesta', {
@@ -183,46 +177,6 @@
     <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Prueba Afectiva</h5>
         <form>
-            <div id="apariencia" class="mb-3">
-                <label class="form-label">Visual - Apariencia:</label>
-                <div class="d-flex justify-content-center">
-                    <span id="emoji1" class="emoji" onclick="selectEmoji('apariencia', 'emoji1')">😡</span>
-                    <span id="emoji2" class="emoji" onclick="selectEmoji('apariencia', 'emoji2')">😟</span>
-                    <span id="emoji3" class="emoji" onclick="selectEmoji('apariencia', 'emoji3')">😐</span>
-                    <span id="emoji4" class="emoji" onclick="selectEmoji('apariencia', 'emoji4')">😊</span>
-                    <span id="emoji5" class="emoji" onclick="selectEmoji('apariencia', 'emoji5')">😍</span>
-                </div>
-            </div>
-            <div id="aroma" class="mb-3">
-                <label class="form-label">Olfato - Aroma:</label>
-                <div class="d-flex justify-content-center">
-                    <span id="emoji6" class="emoji" onclick="selectEmoji('aroma', 'emoji6')">😡</span>
-                    <span id="emoji7" class="emoji" onclick="selectEmoji('aroma', 'emoji7')">😟</span>
-                    <span id="emoji8" class="emoji" onclick="selectEmoji('aroma', 'emoji8')">😐</span>
-                    <span id="emoji9" class="emoji" onclick="selectEmoji('aroma', 'emoji9')">😊</span>
-                    <span id="emoji10" class="emoji" onclick="selectEmoji('aroma', 'emoji10')">😍</span>
-                </div>
-            </div>
-            <div id="sabor" class="mb-3">
-                <label class="form-label">Gusto - Sabor:</label>
-                <div class="d-flex justify-content-center">
-                    <span id="emoji11" class="emoji" onclick="selectEmoji('sabor', 'emoji11')">😡</span>
-                    <span id="emoji12" class="emoji" onclick="selectEmoji('sabor', 'emoji12')">😟</span>
-                    <span id="emoji13" class="emoji" onclick="selectEmoji('sabor', 'emoji13')">😐</span>
-                    <span id="emoji14" class="emoji" onclick="selectEmoji('sabor', 'emoji14')">😊</span>
-                    <span id="emoji15" class="emoji" onclick="selectEmoji('sabor', 'emoji15')">😍</span>
-                </div>
-            </div>
-            <div id="textura" class="mb-3">
-                <label class="form-label">Tacto - Textura:</label>
-                <div class="d-flex justify-content-center">
-                    <span id="emoji16" class="emoji" onclick="selectEmoji('textura', 'emoji16')">😡</span>
-                    <span id="emoji17" class="emoji" onclick="selectEmoji('textura', 'emoji17')">😟</span>
-                    <span id="emoji18" class="emoji" onclick="selectEmoji('textura', 'emoji18')">😐</span>
-                    <span id="emoji19" class="emoji" onclick="selectEmoji('textura', 'emoji19')">😊</span>
-                    <span id="emoji20" class="emoji" onclick="selectEmoji('textura', 'emoji20')">😍</span>
-                </div>
-            </div>
             <div id="opinion" class="mb-3">
                 <label class="form-label">Prueba Afectiva - Opinión:</label>
                 <div class="d-flex justify-content-center">
@@ -241,52 +195,62 @@
         <h5 class="card-title text-center">Prueba Descriptiva</h5>
         <form>
             <div class="mb-3">
-                <label for="dulzor" class="form-label">Dulzor:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="dulzor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="suavidad" class="form-label">Suavidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="suavidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="acidez" class="form-label">Acidez:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="acidez" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="humedad" class="form-label">Humedad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="humedad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="amargor" class="form-label">Amargor:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="amargor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="esponjosidad" class="form-label">Esponjosidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="esponjosidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="salado" class="form-label">Salado:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="salado" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="fragilidad" class="form-label">Fragilidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="fragilidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
-            <div class="d-grid">
-                <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Enviar</button>
+            <div class="mb-3">
+                <label for="grasoso" class="form-label">Grasoso:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="grasoso" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
+                </div>
             </div>
+            <div class="mb-3">
+                <label for="crocante" class="form-label">Crocante:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="crocante" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="dureza" class="form-label">Dureza:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="dureza" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="enviarFormulario()">Enviar</button>
         </form>
     </div>
 </div>
