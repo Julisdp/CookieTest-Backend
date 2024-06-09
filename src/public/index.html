@@ -195,86 +195,62 @@
         <h5 class="card-title text-center">Prueba Descriptiva</h5>
         <form>
             <div class="mb-3">
-                <label for="dulzor" class="form-label">Humedad:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="dulzor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="suavidad" class="form-label">Suavidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="suavidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="acidez" class="form-label">Textura:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="acidez" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="humedad" class="form-label">Humedad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="humedad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="amargor" class="form-label">Esponjosidad:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="amargor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="esponjosidad" class="form-label">Esponjosidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="esponjosidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="salado" class="form-label">Fragiliadad:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="salado" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="fragilidad" class="form-label">Fragilidad:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="fragilidad" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="visual-apariencia" class="form-label">Grasosos:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="visual-apariencia" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="grasoso" class="form-label">Grasoso:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="grasoso" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="olfato-aroma" class="form-label">Crocante:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="olfato-aroma" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="crocante" class="form-label">Crocante:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="crocante" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="gusto-sabor" class="form-label">Dureza:</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="gusto-sabor" oninput="ajustarValorSlider(this)">
-                <div class="range-labels" style="margin-top: -15px;">
-                    <span>Muy Malo</span>
-                    <span>Malo</span>
-                    <span>Normal</span>
-                    <span>Bueno</span>
-                    <span>Muy Bueno</span>
+                <label for="dureza" class="form-label">Dureza:</label>
+                <input type="range" class="form-range" min="1" max="5" step="1" id="dureza" oninput="ajustarValorSlider(this)" required>
+                <div class="range-labels">
+                    <span>Baja</span>
+                    <span>Alta</span>
                 </div>
             </div>
-            
-            <div class="d-grid">
-                <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Enviar</button>
-            </div>
+            <button type="button" class="btn btn-primary w-100" onclick="enviarFormulario()">Enviar</button>
         </form>
     </div>
 </div>
