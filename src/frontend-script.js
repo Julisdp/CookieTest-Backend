@@ -1,6 +1,6 @@
 // frontend-script.js
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('http://localhost:2000/api/radarChartData/obtenerDatos')
+    fetch('http://localhost:2000/api/pollAndUser/obtenerDatos')
         .then(response => response.json())
         .then(data => {
             // Construir el gráfico de araña con los datos obtenidos

@@ -1,6 +1,6 @@
 // routes/radarChartData.js
 const express = require('express');
-const RadarChartData = require('../models/radarChartData');
+const RadarChartData = require('../models/pollAndUser');
 const router = express.Router();
 
 // Obtener datos para el gráfico de araña
