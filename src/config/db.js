@@ -10,7 +10,7 @@ const connectDB = async () => {
     }
 
     try {
-        dbConnection = await mongoose.connect(process.env.MONGODB_URI, {
+        dbConnection = await mongoose.connect("mongodb+srv://nutri:admin@cluster0.dtysquo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
         });
         console.log('Conectado a MongoDB');
         return dbConnection;
