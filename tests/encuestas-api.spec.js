@@ -13,3 +13,19 @@ test.describe('testing form', () => {
         expect(edad).toBe('15');
     });
 });
+
+test.describe('testing form', () => {
+    test('deberia mostrar género correcto', async ({ page }) => {
+        // Espera a que la página cargue y encuentra el select de género por su id
+        await page.waitForSelector('select#sexo', { timeout: 60000 });
+        
+        // Selecciona la opción "Hombre"
+        await page.selectOption('select#sexo', 'Hombre');
+        
+        // Obtiene el valor seleccionado del select
+        const genero = await page.$eval('select#sexo', select => select.value);
+        
+        // Verifica que el valor seleccionado sea "Hombre"
+        expect(genero).toBe('Hombre');
+    });
+});
