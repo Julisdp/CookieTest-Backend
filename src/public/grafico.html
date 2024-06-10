@@ -117,7 +117,6 @@
                     afectivoData.Mujer.count ? afectivoData.Mujer.sumAfectivo / afectivoData.Mujer.count : 0,
                     afectivoData.Otro.count ? afectivoData.Otro.sumAfectivo / afectivoData.Otro.count : 0
                 ];
-                const promedioTotalAfectivo = promedioAfectivo.reduce((a, b) => a + b, 0) / labels.length;
 
                 const totalEncuestas = afectivoData.Hombre.count + afectivoData.Mujer.count + afectivoData.Otro.count;
 
@@ -128,7 +127,6 @@
                         <li>Mujer: ${afectivoData.Mujer.count} encuestas</li>
                         <li>Otro: ${afectivoData.Otro.count} encuestas</li>
                     </ul>
-                    <h5>Promedio rtaAfectivo: ${promedioTotalAfectivo.toFixed(2)}</h5>
                     <h5>Total de Encuestas: ${totalEncuestas}</h5>
                 `;
 
