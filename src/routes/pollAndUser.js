@@ -1,5 +1,7 @@
+// src/routes/pollAndUser.js
+
 const express = require('express');
-const PollAndUser = require('../models/pollAndUser.js');
+const PollAndUser = require('../models/pollAndUser');
 const Joi = require('joi');
 
 const router = express.Router();
@@ -18,29 +20,42 @@ const pollAndUserSchema = Joi.object({
     edad: Joi.number().integer().min(1).required()
 });
 
-// Crear una nueva encuesta y usuario
+// Proxy para manejo de creación y obtención de encuestas
+const proxyHandler = {
+    create: async (data) => {
+        console.log('Intentando crear encuesta con datos:', data);
+        const { error } = pollAndUserSchema.validate(data);
+        if (error) {
+            console.error('Error en la validación:', error.details[0].message);
+            throw new Error(error.details[0].message);
+        }
+        console.log('Encuesta validada correctamente.');
+        return await new PollAndUser(data).save();
+    },
+    getAll: async () => {
+        console.log('Obteniendo todas las encuestas...');
+        return await PollAndUser.find();
+    }
+};
+
+// Ruta para crear una nueva encuesta y usuario
 router.post('/agregarEncuesta', async (req, res, next) => {
     try {
-        const { error, value } = pollAndUserSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
-
-        // Crear y guardar la nueva encuesta y usuario
-        const pollAndUser = new PollAndUser(value);
-        const encuestaGuardada = await pollAndUser.save();
+        const encuestaGuardada = await proxyHandler.create(req.body);
         res.status(201).json(encuestaGuardada);
     } catch (err) {
-        next(err);
+        console.error('Error al crear encuesta:', err.message);
+        res.status(400).json({ message: err.message });
     }
 });
 
-// Obtener todas las encuestas
+// Ruta para obtener todas las encuestas
 router.get('/obtenerEncuestas', async (req, res) => {
     try {
-        const encuestas = await PollAndUser.find();
+        const encuestas = await proxyHandler.getAll();
         res.status(200).json(encuestas);
     } catch (err) {
+        console.error('Error al obtener encuestas:', err.message);
         res.status(500).json({ message: 'Error al obtener las encuestas', error: err.message });
     }
 });
