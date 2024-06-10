@@ -45,10 +45,10 @@
             </div>
             <div id="chartContainer" class="chart-container row">
                 <div class="col-md-8">
-                    <canvas id="radarChart"></canvas>
+                    <canvas id="chart"></canvas>
                 </div>
                 <div id="legendContainer" class="col-md-4 legend-container">
-                    <!-- Leyenda se inserta aquí dinámicamente -->
+                    <!-- Leyenda y promedio de rtaAfectivo se insertan aquí dinámicamente -->
                 </div>
             </div>
         </div>
@@ -56,44 +56,104 @@
     <script>
         let chart;
 
-        function showChart(type) {
+        async function fetchChartData() {
+            try {
+                const response = await fetch('/api/encuestas/obtenerEncuestas');
+                return response.json();
+            } catch (error) {
+                console.error('Error fetching chart data:', error);
+                return null;
+            }
+        }
+
+        async function showChart(type) {
             document.getElementById('chartContainer').style.display = 'block';
             if (chart) {
                 chart.destroy();
             }
 
-            const storedData = localStorage.getItem('evaluacionSensorial');
-            const evaluacionSensorial = storedData ? JSON.parse(storedData) : null;
+            const data = await fetchChartData();
+            if (!data) return;
 
-            let labels, dataValues, legendHtml;
+            let labels, dataValues, legendHtml, config;
 
             if (type === 'afectivo') {
-                labels = ['Apariencia', 'Aroma', 'Sabor', 'Textura', 'Opinión'];
-                dataValues = evaluacionSensorial ? [
-                    evaluacionSensorial.rtaCrocante,
-                    evaluacionSensorial.rtaDureza,
-                    evaluacionSensorial.rtaAfectivo,
-                    evaluacionSensorial.rtaSuavidad,
-                    evaluacionSensorial.rtaHumedad
-                ] : [0, 0, 0, 0, 0];
+                const afectivoData = { Hombre: { sumEdad: 0, count: 0, sumAfectivo: 0 }, Mujer: { sumEdad: 0, count: 0, sumAfectivo: 0 }, Otro: { sumEdad: 0, count: 0, sumAfectivo: 0 } };
+
+                data.forEach(encuesta => {
+                    afectivoData[encuesta.genero].sumEdad += encuesta.edad;
+                    afectivoData[encuesta.genero].sumAfectivo += encuesta.rtaAfectivo;
+                    afectivoData[encuesta.genero].count += 1;
+                });
+
+                labels = ['Hombre', 'Mujer', 'Otro'];
+                dataValues = [
+                    afectivoData.Hombre.count ? afectivoData.Hombre.sumEdad / afectivoData.Hombre.count : 0,
+                    afectivoData.Mujer.count ? afectivoData.Mujer.sumEdad / afectivoData.Mujer.count : 0,
+                    afectivoData.Otro.count ? afectivoData.Otro.sumEdad / afectivoData.Otro.count : 0
+                ];
+                const promedioAfectivo = [
+                    afectivoData.Hombre.count ? afectivoData.Hombre.sumAfectivo / afectivoData.Hombre.count : 0,
+                    afectivoData.Mujer.count ? afectivoData.Mujer.sumAfectivo / afectivoData.Mujer.count : 0,
+                    afectivoData.Otro.count ? afectivoData.Otro.sumAfectivo / afectivoData.Otro.count : 0
+                ];
+                const promedioTotalAfectivo = promedioAfectivo.reduce((a, b) => a + b, 0) / labels.length;
+
                 legendHtml = `
                     <h5>Leyenda</h5>
                     <ul>
-                        <li>1 - Muy Malo (😡)</li>
-                        <li>2 - Malo (😟)</li>
-                        <li>3 - Normal (😐)</li>
-                        <li>4 - Bueno (😊)</li>
-                        <li>5 - Muy Bueno (😍)</li>
+                        <li>Hombre: ${afectivoData.Hombre.count} encuestas</li>
+                        <li>Mujer: ${afectivoData.Mujer.count} encuestas</li>
+                        <li>Otro: ${afectivoData.Otro.count} encuestas</li>
                     </ul>
+                    <h5>Promedio Opinion: ${promedioTotalAfectivo.toFixed(2)}</h5>
                 `;
+
+                config = {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Promedio de Edad',
+                            data: dataValues,
+                            backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                            borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                };
             } else if (type === 'descriptivo') {
-                labels = ['Dulzor', 'Acidez', 'Amargor', 'Salado'];
-                dataValues = evaluacionSensorial ? [
-                    evaluacionSensorial.rtaEsponjosidad,
-                    evaluacionSensorial.rtaHumedad,
-                    evaluacionSensorial.rtaFragilidad,
-                    evaluacionSensorial.rtaGrasoso
-                ] : [0, 0, 0, 0];
+                const descriptivoData = { rtaSuavidad: 0, rtaHumedad: 0, rtaEsponjosidad: 0, rtaFragilidad: 0, rtaGrasoso: 0, rtaCrocante: 0, rtaDureza: 0 };
+                let count = 0;
+
+                data.forEach(encuesta => {
+                    descriptivoData.rtaSuavidad += encuesta.rtaSuavidad;
+                    descriptivoData.rtaHumedad += encuesta.rtaHumedad;
+                    descriptivoData.rtaEsponjosidad += encuesta.rtaEsponjosidad;
+                    descriptivoData.rtaFragilidad += encuesta.rtaFragilidad;
+                    descriptivoData.rtaGrasoso += encuesta.rtaGrasoso;
+                    descriptivoData.rtaCrocante += encuesta.rtaCrocante;
+                    descriptivoData.rtaDureza += encuesta.rtaDureza;
+                    count += 1;
+                });
+
+                labels = ['Suavidad', 'Humedad', 'Esponjosidad', 'Fragilidad', 'Grasoso', 'Crocante', 'Dureza'];
+                dataValues = [
+                    descriptivoData.rtaSuavidad / count,
+                    descriptivoData.rtaHumedad / count,
+                    descriptivoData.rtaEsponjosidad / count,
+                    descriptivoData.rtaFragilidad / count,
+                    descriptivoData.rtaGrasoso / count,
+                    descriptivoData.rtaCrocante / count,
+                    descriptivoData.rtaDureza / count
+                ];
                 legendHtml = `
                     <h5>Leyenda</h5>
                     <ul>
@@ -104,33 +164,31 @@
                         <li>5 - Muy Bueno</li>
                     </ul>
                 `;
-            }
 
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: `Gráfico ${type.charAt(0).toUpperCase() + type.slice(1)}`,
-                    data: dataValues,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            };
-
-            const config = {
-                type: 'radar',
-                data: data,
-                options: {
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 5
+                config = {
+                    type: 'radar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Promedio de Respuestas',
+                            data: dataValues,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 5
+                            }
                         }
                     }
-                }
-            };
+                };
+            }
 
-            chart = new Chart(document.getElementById('radarChart'), config);
+            chart = new Chart(document.getElementById('chart'), config);
             document.getElementById('legendContainer').innerHTML = legendHtml;
         }
     </script>
