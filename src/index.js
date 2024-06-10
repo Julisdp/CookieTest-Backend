@@ -1,13 +1,14 @@
+// src/index.js
+
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose')
-require('dotenv').config();
 const path = require('path');
+require('dotenv').config();
 const pollAndUserRoutes = require('./routes/pollAndUser');
+const db = require('./database/database') // Importa el Singleton de la base de datos
 
 const app = express();
 const port = process.env.PORT || 2000;
-
 
 // Middleware
 app.use(express.json());
@@ -29,10 +30,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log('Conectado a MongoDB Atlas'))
-    .catch((error) => console.error(error));
+// Usar la conexión de la base de datos desde el Singleton
+db.getConnection();
 
 app.listen(port, () => console.log('listening on port ' + port));
 
