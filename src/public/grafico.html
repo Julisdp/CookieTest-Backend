@@ -32,6 +32,16 @@
         .legend-container {
             margin-top: 20px;
         }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .col-md-8, .col-md-4 {
+            flex: 1;
+        }
+        #additionalChartContainer {
+            margin-top: 50px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -46,6 +56,7 @@
             <div id="chartContainer" class="chart-container row">
                 <div class="col-md-8">
                     <canvas id="chart"></canvas>
+                    <canvas id="additionalChart"></canvas>
                 </div>
                 <div id="legendContainer" class="col-md-4 legend-container">
                     <!-- Leyenda y promedio de rtaAfectivo se insertan aquí dinámicamente -->
@@ -54,7 +65,7 @@
         </div>
     </div>
     <script>
-        let chart;
+        let chart, additionalChart;
 
         async function fetchChartData() {
             try {
@@ -70,6 +81,9 @@
             document.getElementById('chartContainer').style.display = 'block';
             if (chart) {
                 chart.destroy();
+            }
+            if (additionalChart) {
+                additionalChart.destroy();
             }
 
             const data = await fetchChartData();
@@ -97,7 +111,6 @@
                     afectivoData.Mujer.count ? afectivoData.Mujer.sumAfectivo / afectivoData.Mujer.count : 0,
                     afectivoData.Otro.count ? afectivoData.Otro.sumAfectivo / afectivoData.Otro.count : 0
                 ];
-                const promedioTotalAfectivo = promedioAfectivo.reduce((a, b) => a + b, 0) / labels.length;
 
                 legendHtml = `
                     <h5>Leyenda</h5>
@@ -106,7 +119,6 @@
                         <li>Mujer: ${afectivoData.Mujer.count} encuestas</li>
                         <li>Otro: ${afectivoData.Otro.count} encuestas</li>
                     </ul>
-                    <h5>Promedio Opinion: ${promedioTotalAfectivo.toFixed(2)}</h5>
                 `;
 
                 config = {
@@ -129,6 +141,39 @@
                         }
                     }
                 };
+                chart = new Chart(document.getElementById('chart'), config);
+
+                // Creating the additional bar chart for general opinion
+                const opinionCounts = [0, 0, 0, 0, 0]; // Array to hold the counts of each opinion level
+
+                data.forEach(encuesta => {
+                    opinionCounts[encuesta.rtaAfectivo - 1] += 1;
+                });
+
+                const opinionLabels = ['No me gusta nada', 'No me gusta', 'Me es indiferente', 'Me gusta', 'Me gusta mucho'];
+
+                const opinionConfig = {
+                    type: 'bar',
+                    data: {
+                        labels: opinionLabels,
+                        datasets: [{
+                            label: 'Cantidad de Opiniones',
+                            data: opinionCounts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                };
+                additionalChart = new Chart(document.getElementById('additionalChart'), opinionConfig);
+
             } else if (type === 'descriptivo') {
                 const descriptivoData = { rtaSuavidad: 0, rtaHumedad: 0, rtaEsponjosidad: 0, rtaFragilidad: 0, rtaGrasoso: 0, rtaCrocante: 0, rtaDureza: 0 };
                 let count = 0;
@@ -186,9 +231,9 @@
                         }
                     }
                 };
+                chart = new Chart(document.getElementById('chart'), config);
             }
 
-            chart = new Chart(document.getElementById('chart'), config);
             document.getElementById('legendContainer').innerHTML = legendHtml;
         }
     </script>
