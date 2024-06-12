@@ -127,7 +127,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Éxito:', data);
-                window.location.href = 'gracias.html';
+                window.location.href = 'grafico.html';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -179,17 +179,48 @@
         <form>
             <div id="opinion" class="mb-3">
                 <label class="form-label">Prueba Afectiva - Opinión:</label>
-                <div class="d-flex justify-content-center">
-                    <span id="emoji21" class="emoji" onclick="selectEmoji('opinion', 'emoji21')">😡</span>
-                    <span id="emoji22" class="emoji" onclick="selectEmoji('opinion', 'emoji22')">😟</span>
-                    <span id="emoji23" class="emoji" onclick="selectEmoji('opinion', 'emoji23')">😐</span>
-                    <span id="emoji24" class="emoji" onclick="selectEmoji('opinion', 'emoji24')">😊</span>
-                    <span id="emoji25" class="emoji" onclick="selectEmoji('opinion', 'emoji25')">😍</span>
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="emoji21" class="emoji" onclick="selectEmoji('opinion', 'emoji21')">😡</span>
+                            <span class="emoji-label">Muy Malo</span>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="emoji22" class="emoji" onclick="selectEmoji('opinion', 'emoji22')">😟</span>
+                            <span class="emoji-label">Malo</span>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="emoji23" class="emoji" onclick="selectEmoji('opinion', 'emoji23')">😐</span>
+                            <span class="emoji-label">Bueno</span>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="emoji24" class="emoji" onclick="selectEmoji('opinion', 'emoji24')">😊</span>
+                            <span class="emoji-label">Muy Bueno</span>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="emoji25" class="emoji" onclick="selectEmoji('opinion', 'emoji25')">😍</span>
+                            <span class="emoji-label">Excelente</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
-
+    
+    <style>
+        .emoji {
+            cursor: pointer;
+            font-size: 2em;
+        }
+        .emoji-label {
+            font-size: 0.8em; /* Tamaño de letra más pequeño */
+        }
+      
+        .card-title {
+            margin-bottom: 20px;
+        }
+    </style>
+    
     <!-- Prueba Descriptiva -->
     <div class="yellow-box card card-body">
         <h5 class="card-title text-center">Prueba Descriptiva</h5>
