@@ -127,7 +127,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Éxito:', data);
-                window.location.href = "https://pagina-galletita-nxoh.vercel.app/index.html";
+                window.location.href = 'grafico.html';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -160,7 +160,7 @@
         <form>
             <div class="mb-3">
                 <label for="edad" class="form-label">Edad:</label>
-                <input type="number" class="form-control" id="edad" required>
+                <input type="number" class="form-control" id="edad" min="1" max="100" required>
             </div>
             <div class="mb-3">
                 <label for="sexo" class="form-label">Sexo:</label>
