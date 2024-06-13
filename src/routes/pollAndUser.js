@@ -60,19 +60,4 @@ router.get('/obtenerEncuestas', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-module.exports = {
-    router,
-    proxyHandler
-};
-=======
 module.exports = router;
->>>>>>> parent of 1f2d11e (solucion de mi cagada xd)
-=======
-module.exports = {
-    router,
-    proxyHandler
-};
->>>>>>> parent of f37db97 (Revert "solucion de mi cagada xd")
