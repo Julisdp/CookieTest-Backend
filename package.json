@@ -118,6 +118,7 @@
   "scripts": {
     "start": "nodemon src/index.js",
     "test": "playwright test",
+    "test:coverage": "jest --coverage",
     "test:watch": "playwright test --ui"
   },
   "keywords": [],
