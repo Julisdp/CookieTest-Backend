@@ -60,7 +60,4 @@ router.get('/obtenerEncuestas', async (req, res) => {
     }
 });
 
-module.exports = {
-    router,
-    proxyHandler
-};
+module.exports = router;
