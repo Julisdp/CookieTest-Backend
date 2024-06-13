@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'nodemon src/index.js', // Asegúrate de que 'npm start' inicie tu servidor correctamente
+    command: 'nodemon src/index.js',
     url: 'http://127.0.0.1:2000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // Aumenta el timeout si el servidor tarda en arrancar
