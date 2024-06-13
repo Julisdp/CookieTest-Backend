@@ -117,6 +117,7 @@
   },
   "scripts": {
     "start": "nodemon src/index.js",
+    "covertura": "jest --coverage",
     "test": "playwright test",
     "test:watch": "playwright test --ui"
   },
