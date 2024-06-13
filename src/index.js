@@ -1,11 +1,9 @@
-// src/index.js
-
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 require('dotenv').config();
 const pollAndUserRoutes = require('./routes/pollAndUser');
-const db = require('./database/database') // Importa el Singleton de la base de datos
+const db = require('./database/database') 
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -36,3 +34,5 @@ db.getConnection();
 app.listen(port, () => console.log('listening on port ' + port));
 
 module.exports = app;
+
+
