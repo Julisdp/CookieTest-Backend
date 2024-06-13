@@ -60,8 +60,12 @@ router.get('/obtenerEncuestas', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 
 module.exports = {
     router,
     proxyHandler
 };
+=======
+module.exports = router;
+>>>>>>> parent of 1f2d11e (solucion de mi cagada xd)
