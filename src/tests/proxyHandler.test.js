@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const PollAndUser = require('../models/pollAndUser');
-const { proxyHandler } = require('../routes/pollAndUser'); // Asegúrate de importar proxyHandler correctamente
+const { proxyHandler } = require('../routes/pollAndUser'); 
 
 jest.mock('../models/pollAndUser');
 

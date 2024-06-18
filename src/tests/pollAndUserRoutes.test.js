@@ -2,13 +2,13 @@ const express = require('express');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const PollAndUser = require('../models/pollAndUser');
-const { router } = require('../routes/pollAndUser'); // Asegúrate de importar el router
+const { router } = require('../routes/pollAndUser'); 
 
 jest.mock('../models/pollAndUser');
 
 const app = express();
 app.use(express.json());
-app.use('/api/encuestas', router); // Usa el router importado
+app.use('/api/encuestas', router); 
 
 describe('POST /api/encuestas/agregarEncuesta', () => {
     afterEach(() => {
@@ -50,7 +50,7 @@ describe('POST /api/encuestas/agregarEncuesta', () => {
             .send(invalidData);
 
         expect(res.status).toBe(400);
-        expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toContain('"rtaAfectivo" must be less than or equal to 5');
+        expect(res.body).toHaveProperty('mensaje');
+        expect(res.body.message).toContain('"rtaAfectivo" tiene que ser menor o igual a 5');
     });
 });
